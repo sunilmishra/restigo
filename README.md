@@ -42,12 +42,13 @@ void main() async {
     },
   );
 
+  final uri = _client.resolveEndpoint('/posts');
   // GET request
-  final posts = await client.get('/posts');
+  final posts = await client.get(uri);
   print(posts);
 
   // POST request
-  final newPost = await client.post('/posts', {
+  final newPost = await client.post(uri, {
     "title": "Hello",
     "body": "This is a test",
     "userId": 1
