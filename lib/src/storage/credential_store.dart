@@ -27,6 +27,9 @@ abstract class CredentialStore {
   String? _password;
   Future<String?> get password => Future.value(_password);
   set password(dynamic pwd) => _password = pwd;
+
+  /// Clear all stored credentials.
+  Future<void> clear();
 }
 
 ///
@@ -37,7 +40,7 @@ class CredentialStoreImpl extends CredentialStore {
   CredentialStoreImpl(SecureStorage secureStorage)
     : _secureStorage = secureStorage;
 
-  late final SecureStorage _secureStorage;
+  final SecureStorage _secureStorage;
 
   ///======================== [AccessToken & RefreshToken] ===========================///
   @override
@@ -103,5 +106,14 @@ class CredentialStoreImpl extends CredentialStore {
       super.password = savedPassword;
     }
     return super.password;
+  }
+
+  @override
+  Future<void> clear() async {
+    super._accessToken = null;
+    super._refreshToken = null;
+    super._username = null;
+    super._password = null;
+    await _secureStorage.deleteAll();
   }
 }

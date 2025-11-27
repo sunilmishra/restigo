@@ -4,13 +4,16 @@ import 'package:flutter/material.dart';
 import 'package:restigo/restigo.dart';
 
 void main() {
-  final credentialStore = CredentialStoreImpl(SecureStorageImpl());
-  final client = Restigo(
-    credentialStore: credentialStore,
-    configuration: ServerConfiguration(url: 'dummyjson.com'),
-    tokenUrl: Uri(),
-    unAuthorizedCallback: () {},
-  );
+  final builder = RestigoBuilder(baseUrl: 'dummyjson.com')
+    ..enableLogging()
+    ..enableAuth(
+      tokenUrl: Uri.parse('https://dummyjson.com/auth/token'),
+      onUnauthorized: () async {
+        // Handle unauthorized access, e.g., navigate to login screen
+      },
+    );
+
+  final client = builder.build();
 
   final notifier = PostNotifier(client: client);
   runApp(MyApp(notifier: notifier));
