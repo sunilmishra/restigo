@@ -2,8 +2,7 @@
 
 **REST APIs, ready to go.**
 
-Restigo is a lightweight, easy-to-use REST client for **Flutter & Dart**.  
-It helps you make **GET, POST, PUT, DELETE** requests effortlessly with built-in **JSON parsing** and **error handling**. Perfect for building modern apps that communicate with REST APIs.
+Restigo is a lightweight, modular REST client for **Flutter & Dart**. It simplifies HTTP API interactions with built-in authentication, secure credential storage, logging, and robust error handling.
 
 ---
 
@@ -11,11 +10,13 @@ It helps you make **GET, POST, PUT, DELETE** requests effortlessly with built-in
 
 - ✅ Simple and intuitive API
 - ✅ Supports GET, POST, PUT, DELETE requests
-- ✅ Optional Secure Storage for tokens (JWT, API keys, etc.)  
+- ✅ Interceptor support (logging, authentication, custom)
+- ✅ Optional Secure Storage for tokens (JWT, API keys, etc.)
 - ✅ Handles JSON encoding/decoding automatically
-- ✅ Configurable headers
+- ✅ Configurable headers and timeouts
 - ✅ Lightweight and fast
 - ✅ Works with both Flutter and Dart projects
+- ✅ Structured error handling
 
 ---
 
@@ -27,20 +28,18 @@ Add this to your `pubspec.yaml`:
 dependencies:
   restigo: ^0.0.1
 ```
-## Example
-```
+
+---
+
+## Example Usage
+
+```dart
 import 'package:restigo/restigo.dart';
 
 void main() async {
-  final credentialStore = CredentialStoreImpl(SecureStorageImpl());
-  final client = Restigo(
-    credentialStore: credentialStore,
-    configuration: ServerConfiguration(url: 'dummyjson.com'),
-    tokenUrl: Uri(), // e.g "/login"
-    unAuthorizedCallback: () {
-      // if Refreshed Token get failed with 401
-    },
-  );
+  final builder = RestigoBuilder(baseUrl: 'dummyjson.com')
+    ..enableLogging();
+  final client = builder.build();
 
   final uri = _client.resolveEndpoint('/posts');
   // GET request
@@ -57,3 +56,28 @@ void main() async {
 }
 
 ```
+
+---
+
+## Design & Structure
+
+- **RestigoClient**: The core HTTP client, supporting interceptors and error handling.
+- **RestigoBuilder**: Fluent builder for configuring the client (base URL, interceptors, auth, etc.).
+- **Interceptors**: Easily add logging, authentication, or custom logic to requests/responses.
+- **CredentialStore**: Secure and abstract implementations for storing tokens, username, and password.
+- **SecureStorage**: Abstracts platform-specific secure storage (e.g., Keychain, Keystore).
+- **ApiException**: Rich error class with types for connection, serialization, unauthorized, and unknown errors.
+
+---
+
+## Testing
+
+- Comprehensive unit tests for all major components (client, interceptors, credential store, exceptions).
+- Uses `mocktail` for mocking dependencies.
+- Test suite runner included.
+
+---
+
+**Summary:**  
+Restigo is a well-structured, extensible, and secure REST client for Dart/Flutter, suitable for modern app development. It’s easy to use, robust, and ready for production with minor documentation and polish improvements.
+

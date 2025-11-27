@@ -1,10 +1,14 @@
-// ignore: unnecessary_library_name
+/// A Dart library for RESTful API interactions with built-in authentication,
+/// logging, and secure credential storage.
+///
+// ignore_for_file: unnecessary_library_name
+
 library restigo;
 
 export 'src/restigo_client.dart';
-export 'src/server_config.dart';
-export 'src/api_exception.dart';
 
-/// Storage
-export 'src/storage/credential_store.dart';
-export 'src/storage/secure_storage.dart';
+export 'src/interceptors/restigo_interceptor.dart';
+export 'src/interceptors/logging_interceptor.dart';
+export 'src/interceptors/auth_interceptor.dart';
+
+export 'src/error/api_exception.dart';

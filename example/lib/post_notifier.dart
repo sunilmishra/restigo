@@ -6,11 +6,11 @@ import 'package:restigo/restigo.dart';
 import 'post.dart';
 
 class PostNotifier extends ChangeNotifier {
-  PostNotifier({required Restigo client}) : _client = client {
+  PostNotifier({required RestigoClient client}) : _client = client {
     fetchPosts();
   }
 
-  final Restigo _client;
+  final RestigoClient _client;
 
   bool _loading = false;
   bool get loading => _loading;
@@ -27,7 +27,7 @@ class PostNotifier extends ChangeNotifier {
     notifyListeners();
 
     try {
-      final response = await _client.get(_client.resolveEndpoint('/posts'));
+      final response = await _client.get(_client.resolve('/posts'));
       if (response.statusCode != 200) {
         throw ApiException.statusCode(response);
       }
