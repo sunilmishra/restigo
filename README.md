@@ -20,17 +20,6 @@ Restigo is a lightweight, modular REST client for **Flutter & Dart**. It simplif
 
 ---
 
-## Installation
-
-Add this to your `pubspec.yaml`:
-
-```yaml
-dependencies:
-  restigo: ^0.0.1
-```
-
----
-
 ## Example Usage
 
 ```dart
@@ -78,6 +67,6 @@ void main() async {
 
 ---
 
-**Summary:**  
-Restigo is a well-structured, extensible, and secure REST client for Dart/Flutter, suitable for modern app development. It’s easy to use, robust, and ready for production with minor documentation and polish improvements.
+## Summary
+Restigo is a well-structured, extensible, and secure REST client for Dart/Flutter, suitable for modern app development. It’s easy to use, robust, and ready for production with minor documentation and polish improvements. Happy coding 😀
 
