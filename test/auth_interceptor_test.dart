@@ -32,7 +32,7 @@ void main() {
 
   test('adds Authorization header if token exists', () async {
     final request = Request('GET', Uri.https('api.example.com', '/test'));
-    when(() => mockTokenManager.tokenUrl).thenReturn(fakeTokenUri);
+    when(() => mockTokenManager.tokenUri).thenReturn(fakeTokenUri);
     when(
       () => mockTokenManager.getAccessToken(),
     ).thenAnswer((_) async => 'token123');
@@ -43,7 +43,7 @@ void main() {
 
   test('does not add Authorization header for token endpoint', () async {
     final request = Request('POST', fakeTokenUri);
-    when(() => mockTokenManager.tokenUrl).thenReturn(fakeTokenUri);
+    when(() => mockTokenManager.tokenUri).thenReturn(fakeTokenUri);
     final result = await interceptor.onRequest(request);
     expect(result.headers[HttpHeaders.authorizationHeader], isNull);
   });

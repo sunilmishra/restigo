@@ -25,9 +25,10 @@ void main() {
   setUp(() {
     mockClient = MockClient();
     mockInterceptor = MockInterceptor();
-    final builder = RestigoBuilder(baseUrl: 'api.example.com')
-      ..setClient(mockClient)
-      ..addMockInterceptor(mockInterceptor);
+    final builder = RestigoBuilder(
+      baseUrl: 'api.example.com',
+      client: mockClient,
+    )..addMockInterceptor(mockInterceptor);
     client = builder.build();
   });
 

@@ -6,7 +6,7 @@ import 'dart:convert';
 import '../storage/credential_store.dart';
 
 abstract class TokenManager {
-  Uri get tokenUrl;
+  Uri get tokenUri;
 
   Future<String?> getAccessToken();
   Future<bool> refreshToken();
@@ -15,15 +15,15 @@ abstract class TokenManager {
 
 class DefaultTokenManager implements TokenManager {
   DefaultTokenManager({
-    required this.tokenUrl,
+    required this.tokenUri,
     required this.credentialStore,
-    Client? httpClient,
-  }) : _http = httpClient ?? Client();
+    required this.httpClient,
+  });
 
   @override
-  final Uri tokenUrl;
+  final Uri tokenUri;
   final CredentialStore credentialStore;
-  final Client _http;
+  final Client httpClient;
 
   @override
   Future<String?> getAccessToken() async => await credentialStore.accessToken;
@@ -34,8 +34,8 @@ class DefaultTokenManager implements TokenManager {
     if (refresh == null) return false;
 
     try {
-      final response = await _http.post(
-        tokenUrl,
+      final response = await httpClient.post(
+        tokenUri,
         body: {"refresh_token": refresh},
       );
 

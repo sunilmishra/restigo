@@ -17,18 +17,29 @@ class RestigoClient extends BaseClient {
   RestigoClient._internal({
     required this.baseUrl,
     this.interceptors = const [],
-    Client? http,
+    Client? httpClient,
+    this.defaultHeaders,
     Duration? timeout,
-  }) : _http = http ?? Client(),
+  }) : _httpClient = httpClient ?? Client(),
        _timeout = timeout ?? const Duration(seconds: 15);
 
   final String baseUrl;
   final List<RestigoInterceptor> interceptors;
-  final Client _http;
+  final Client _httpClient;
+  final Map<String, String>? defaultHeaders;
   final Duration _timeout;
 
   @override
   Future<StreamedResponse> send(BaseRequest request) async {
+    /// Add default headers if provided otherwise set common json headers
+    if (defaultHeaders != null) {
+      request.headers.addAll(defaultHeaders!);
+    } else {
+      request.headers[HttpHeaders.contentTypeHeader] = 'application/json';
+      request.headers[HttpHeaders.acceptHeader] = 'application/json';
+    }
+
+    /// Handle the request with interceptors and error handling
     try {
       // 1. Apply request interceptors
       for (final i in interceptors) {
@@ -36,7 +47,7 @@ class RestigoClient extends BaseClient {
       }
 
       // 2. Perform network call
-      var response = await _http.send(request).timeout(_timeout);
+      var response = await _httpClient.send(request).timeout(_timeout);
 
       // 3. Apply response interceptors
       for (final i in interceptors) {
