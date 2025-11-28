@@ -27,14 +27,12 @@ class PostNotifier extends ChangeNotifier {
     notifyListeners();
 
     try {
-      // final response = await _client.get(_client.resolve('/posts'));
+      final response = await _client.get(_client.resolve('/posts'));
 
-      final response = await _client.post(
-        Uri.https(_client.baseUrl, '/auth/login'),
-        body: jsonEncode({'username': 'emilys', 'password': 'emilyspass'}),
-      );
-
-      print('---- Login Response: ${response.body}');
+      // final response = await _client.post(
+      //   _client.resolve('/auth/login'),
+      //   body: jsonEncode({'username': 'emilys', 'password': 'emilyspass'}),
+      // );
 
       if (response.statusCode != 200) {
         throw ApiException.statusCode(response);
