@@ -31,7 +31,7 @@ class AuthInterceptor implements RestigoInterceptor {
   @override
   Future<BaseRequest> onRequest(BaseRequest request) async {
     // Skip adding token to the token refresh request
-    if (request.url == tokenManager.tokenUrl) return request;
+    if (request.url == tokenManager.tokenUri) return request;
 
     final token = await tokenManager.getAccessToken();
     if (token != null) {

@@ -7,7 +7,7 @@ void main() {
   final builder = RestigoBuilder(baseUrl: 'dummyjson.com')
     ..enableLogging()
     ..enableAuth(
-      tokenUrl: Uri.parse('https://dummyjson.com/auth/token'),
+      tokenUrl: '/auth/token',
       onUnauthorized: () async {
         // Handle unauthorized access, e.g., navigate to login screen
       },
