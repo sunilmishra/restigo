@@ -28,7 +28,7 @@ import 'package:restigo/restigo.dart';
 void main() async {
   final builder = RestigoBuilder(baseUrl: 'dummyjson.com')
     ..enableLogging();
-  final client = builder.build();
+  final _client = builder.build();
 
   final uri = _client.resolveEndpoint('/posts');
   // GET request
